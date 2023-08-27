@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-undef
-const { User, UserShopConf,UserRank } = require("../../db.js");
+const { User, UserShopConf, UserRank } = require("../../db.js");
 
 // eslint-disable-next-line no-undef
 const { v4: uuidv4 } = require("uuid")
@@ -33,6 +33,15 @@ var initUserRank = async (data) => {
         avatar: data.avatar
     })
     console.log(ret, 'initUserRank')
+}
+
+var getUserRank = async (data) => {
+    let ret = await UserRank.findOne({
+        where: {
+            userID: data.body.userID
+        }
+    })
+    return ret
 }
 
 router.post('/getUserInfo', async (req, res) => {
@@ -96,6 +105,40 @@ router.post('/updateUserShopConf', async (req, res) => {
         }
     })
     console.log(ret, '更新成功，打印updateUserShopConf')
+    res.send(ret)
+})
+
+//获取用户排行榜
+router.post('/getUserRank', async (req, res) => {
+    console.log('getUserRank', req.body)
+    let ret = await getUserRank(req)
+    console.log(ret, '查询成功，打印getUserRank')
+    res.send(ret)
+})
+
+//更新用户排行榜
+router.post('/updateUserRank', async (req, res) => {
+    console.log('updateUserRank', req.body)
+
+    //更新前先查询，是否需要更新排行榜
+    let userRank = await getUserRank(req)
+    let needUpdate = false
+    if (req.body.survivalTime > userRank.survivalTime || req.body.killCount > userRank.killCount || req.body.damageCount > userRank.damageCount) {
+        needUpdate = true
+    }
+    let ret = null
+    if (needUpdate) {
+        ret = await UserRank.update(req.body, {
+            where: {
+                userID: req.body.userID
+            }
+        })
+    } else {
+        ret = "no need update"
+    }
+
+
+    console.log(ret, '更新成功，打印updateUserRank')
     res.send(ret)
 })
 
