@@ -16,7 +16,7 @@ router.post('/getUserInfo', async (req, res) => {
     })
     console.log(ret, '查询结果')
     if (!ret) {
-        ret = ""
+        ret = "null"
     }
     res.send(ret)
 });
