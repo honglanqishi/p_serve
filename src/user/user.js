@@ -1,6 +1,11 @@
 
-const { User ,UserShopConf} = require("../../db.js");
+// eslint-disable-next-line no-undef
+const { User, UserShopConf } = require("../../db.js");
 
+// eslint-disable-next-line no-undef
+const { v4: uuidv4 } = require("uuid")
+
+// eslint-disable-next-line no-undef
 const express = require("express");
 
 let router = express.Router();
@@ -8,12 +13,11 @@ let router = express.Router();
 //初始化用户商店配置
 var initUserShopConf = async (data) => {
     let ret = await UserShopConf.create({
-        userID: data.data.userID,
+        userID: data.userID,
         dailyShop: "[1,1,1,1,1,1]",
         lastRefreshTime: Date.now()
     })
     console.log(ret, 'initUserShopConf')
-    res.send(ret)
 }
 
 router.post('/getUserInfo', async (req, res) => {
@@ -33,8 +37,10 @@ router.post('/getUserInfo', async (req, res) => {
 
 router.post('/createUser', async (req, res) => {
     console.log('createUser', req.body)
+
+    req.body.userID = uuidv4()
     let ret = await User.create(req.body)
-    console.log(ret, 'createUser')
+    console.log(ret, '创建成功，打印createUser')
     if (ret) {
         initUserShopConf(ret)
     }
@@ -43,6 +49,7 @@ router.post('/createUser', async (req, res) => {
 
 
 
+// eslint-disable-next-line no-undef
 module.exports = {
     router
 };

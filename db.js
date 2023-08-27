@@ -1,8 +1,10 @@
+// eslint-disable-next-line no-undef
 const { Sequelize, DataTypes } = require("sequelize");
 
-const { v4: uuidv4 } = require("uuid")
+
 
 // 从环境变量中读取数据库配置
+// eslint-disable-next-line no-undef
 const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
 
 const [host, port] = MYSQL_ADDRESS.split(":");
@@ -30,7 +32,7 @@ const User = sequelize.define("User", {
   },
   userID: {
     type: DataTypes.UUID,
-    defaultValue: uuidv4(),
+    defaultValue: DataTypes.UUIDV4,
   },
   currentRole: {
     type: DataTypes.STRING,
@@ -141,6 +143,7 @@ async function init() {
 }
 
 // 导出初始化方法和模型
+// eslint-disable-next-line no-undef
 module.exports = {
   init,
   Counter,
