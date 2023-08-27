@@ -28,7 +28,7 @@ const User = sequelize.define("User", {
   },
   userID: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4
+    defaultValue: Sequelize.UUIDV4
   },
   currentRole: {
     type: DataTypes.STRING,
