@@ -135,5 +135,6 @@ module.exports = {
   init,
   Counter,
   User,
-  UserShopConf
+  UserShopConf,
+  sequelize
 };

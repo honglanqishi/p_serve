@@ -1,4 +1,5 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("../db.js");
 
 
 //定义用户商店配置数据模型
