@@ -22,10 +22,10 @@ router.post('/getUserInfo', async (req, res) => {
 });
 
 
-router.post('/addUser', async (req, res) => {
-    console.log('addUser', req.body)
+router.post('/createUser', async (req, res) => {
+    console.log('createUser', req.body)
     let ret = await User.create(req.body)
-    console.log(ret, 'addUser')
+    console.log(ret, 'createUser')
     res.send(ret)
 });
 
