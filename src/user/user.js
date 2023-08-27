@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-undef
-const { User, UserShopConf } = require("../../db.js");
+const { User, UserShopConf,UserRank } = require("../../db.js");
 
 // eslint-disable-next-line no-undef
 const { v4: uuidv4 } = require("uuid")
@@ -18,6 +18,21 @@ var initUserShopConf = async (data) => {
         lastRefreshTime: Date.now()
     })
     console.log(ret, 'initUserShopConf')
+}
+
+//初始化用户排行榜
+var initUserRank = async (data) => {
+    let ret = await UserRank.create({
+        userID: data.userID,
+        rank: 0,
+        score: 0,
+        survivalTime: 0,
+        killCount: 0,
+        damageCount: 0,
+        nickname: data.nickname,
+        avatar: data.avatar
+    })
+    console.log(ret, 'initUserRank')
 }
 
 router.post('/getUserInfo', async (req, res) => {
@@ -43,10 +58,21 @@ router.post('/createUser', async (req, res) => {
     console.log(ret, '创建成功，打印createUser')
     if (ret) {
         initUserShopConf(ret)
+        initUserRank(ret)
     }
     res.send(ret)
 });
 
+router.post('/updateUserInfo', async (req, res) => {
+    console.log('updateUserInfo', req.body)
+    let ret = await User.update(req.body, {
+        where: {
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '更新成功，打印updateUserInfo')
+    res.send(ret)
+})
 
 
 // eslint-disable-next-line no-undef

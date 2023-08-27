@@ -123,16 +123,48 @@ const User = sequelize.define("User", {
 //定义用户商店配置数据模型
 const UserShopConf = sequelize.define("UserShopConf", {
   userID: {
-      type: DataTypes.UUID
+    type: DataTypes.UUID
   },
   dailyShop: {
-      type: DataTypes.STRING,
+    type: DataTypes.STRING,
   },
   lastRefreshTime: {
-      type: DataTypes.BIGINT,
+    type: DataTypes.BIGINT,
   }
 });
 
+
+//定义用户排行榜数据模型
+const UserRank = sequelize.define("UserRank", {
+  userID: {
+    type: DataTypes.UUID
+  },
+  rank: {
+    type: DataTypes.INTEGER,
+  },
+  score: {
+    type: DataTypes.INTEGER,
+  },
+  survivalTime: {
+    type: DataTypes.INTEGER,
+  },
+  //击杀数
+  killCount: {
+    type: DataTypes.INTEGER,
+  },
+  //累积伤害
+  damageCount: {
+    type: DataTypes.BIGINT,
+  },
+  nickname: {
+    type: DataTypes.STRING,
+  },
+  avatar: {
+    type: DataTypes.STRING,
+  },
+
+
+});
 
 
 // 数据库初始化方法
@@ -140,6 +172,7 @@ async function init() {
   await Counter.sync({ alter: true });
   await User.sync({ alter: true });
   await UserShopConf.sync({ alter: true });
+  await UserRank.sync({ alter: true });
 }
 
 // 导出初始化方法和模型
@@ -148,5 +181,6 @@ module.exports = {
   init,
   Counter,
   User,
-  UserShopConf
+  UserShopConf,
+  UserRank
 };
