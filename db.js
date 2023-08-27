@@ -126,4 +126,5 @@ async function init() {
 module.exports = {
   init,
   Counter,
+  User,
 };

@@ -6,7 +6,7 @@ const { init: initDB, Counter } = require("./db");
 
 const logger = morgan("tiny");
 
-const usersRouter = require('./src/user/user.js')
+const { router: usersRouter } = require('./src/user/user.js')
 
 const app = express();
 app.use(express.urlencoded({ limit: '50mb', extended: false }));

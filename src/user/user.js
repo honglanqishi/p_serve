@@ -1,6 +1,8 @@
-import { User} from "../db.js";
 
-import express from 'express'
+const { User } = require("../../db.js");
+
+const express = require("express");
+
 let router = express.Router();
 
 
@@ -23,7 +25,10 @@ router.post('/getUserInfo', async (req, res) => {
 router.post('/addUser', async (req, res) => {
     console.log('addUser', req.body)
     let ret = await User.create(req.body)
-
     console.log(ret, 'addUser')
     res.send(ret)
 });
+
+module.exports = {
+    router
+};
