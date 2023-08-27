@@ -1,5 +1,9 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
+const { UserShopConf } = require("./model/UserShopConf.js");
+
+const { v4: uuidv4 } = require("uuid")
+
 // 从环境变量中读取数据库配置
 const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
 
@@ -28,7 +32,7 @@ const User = sequelize.define("User", {
   },
   userID: {
     type: DataTypes.UUID,
-    defaultValue: Sequelize.UUIDV4
+    defaultValue: uuidv4(),
   },
   currentRole: {
     type: DataTypes.STRING,
@@ -116,10 +120,14 @@ const User = sequelize.define("User", {
 
 });
 
+
+
+
 // 数据库初始化方法
 async function init() {
   await Counter.sync({ alter: true });
   await User.sync({ alter: true });
+  await UserShopConf.sync({ alter: true });
 }
 
 // 导出初始化方法和模型
@@ -127,4 +135,5 @@ module.exports = {
   init,
   Counter,
   User,
+  UserShopConf
 };
