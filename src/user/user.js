@@ -117,8 +117,8 @@ router.post('/getUserRank', async (req, res) => {
 })
 
 //更新用户排行榜
-router.post('/updateUserRank', async (req, res) => {
-    console.log('updateUserRank', req.body)
+router.post('/updateUserRankConf', async (req, res) => {
+    console.log('updateUserRankConf', req.body)
 
     //更新前先查询，是否需要更新排行榜
     let userRank = await getUserRank(req)
@@ -142,6 +142,7 @@ router.post('/updateUserRank', async (req, res) => {
     res.send(ret)
 })
 
+//
 
 // eslint-disable-next-line no-undef
 module.exports = {
