@@ -196,6 +196,7 @@ router.post('/getItemsByUserID', async (req, res) => {
         }
     })
 
+    //如果有数据，将eq_attr转为对象
     if (ret.length > 0) {
         ret.forEach((item) => {
             let data = item.dataValues
