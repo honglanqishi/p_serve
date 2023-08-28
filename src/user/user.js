@@ -152,8 +152,8 @@ router.post('/addItem', async (req, res) => {
         let list = await getItemsByType(p.type, p.userID)
         console.log(list, '查询同类型物品，打印List')
         if (list.length > 0) {
-            let item = list[0]
-
+            let item = list[0].dataValues
+            
             if (isAdd) {
                 item.quantity += p.quantity
             } else {
@@ -208,8 +208,8 @@ router.post('/getItemsByUserID', async (req, res) => {
 
 //根据用户ID和物品ID更新物品数据
 router.post('/updateItem', async (req, res) => {
-    console.log('updateItem', req.body)
-    let ret = await Item.update(req.body, {
+    console.log('updateItem入参', req.body)
+    let ret = await Item.update(req.body.data, {
         where: {
             id: req.body.data.id,
             userID: req.body.userID
