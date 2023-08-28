@@ -195,17 +195,6 @@ router.post('/getItemsByUserID', async (req, res) => {
             userID: req.body.userID
         }
     })
-
-    //如果有数据，将eq_attr转为对象
-    // if (ret.length > 0) {
-    //     ret.forEach((item) => {
-    //         let data = item.dataValues
-    //         if(data.eq_attr) {
-    //             item.dataValues.eq_attr = JSON.parse(data.eq_attr)
-    //         }
-    //     })
-    // }
-
     console.log(ret, '查询成功，打印getItemsByUserID')
     res.send(ret)
 })
@@ -222,6 +211,25 @@ router.post('/updateItem', async (req, res) => {
     console.log(ret, '更新成功，打印updateItem')
     res.send(ret)
 })
+
+
+
+//根据类型删除用户物品
+router.post('/deleteItemsByType', async (req, res) => {
+    console.log('deleteItemsByType', req.body)
+    let ret = await Item.destroy({
+        where: {
+            type: req.body.type,
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '删除成功，打印deleteItemsByType')
+    res.send(ret)
+})
+
+
+
+
 
 
 
