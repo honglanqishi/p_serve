@@ -161,10 +161,72 @@ const UserRank = sequelize.define("UserRank", {
   },
   avatar: {
     type: DataTypes.STRING,
+  }
+});
+
+//定义物品数据模型
+const Item = sequelize.define("Item", {
+  id: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+  },
+  userID: {
+    type: DataTypes.UUID
+  },
+  code: {
+    type: DataTypes.INTEGER,
+  },
+  eqAttrKey: {
+    type: DataTypes.STRING,
+  },
+  eq_attr: {
+    type: DataTypes.JSON,
+  },
+  name: {
+    type: DataTypes.STRING,
+  },
+  type: {
+    type: DataTypes.STRING,
+  },
+  description: {
+    type: DataTypes.STRING,
+  },
+  price: {
+    type: DataTypes.INTEGER,
+  },
+  picURL: {
+    type: DataTypes.STRING,
+  },
+  subType: {
+    type: DataTypes.STRING,
+  },
+  level: {
+    type: DataTypes.INTEGER,
+  },
+  status: {
+    type: DataTypes.STRING,
+  },
+  isPileUp: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  isAttack: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
 
+  quantity: {
+    type: DataTypes.INTEGER,
+  },
+  quality: {
+    type: DataTypes.INTEGER,
+  },
 
-});
+}
+);
+
+
+
 
 
 // 数据库初始化方法
@@ -173,6 +235,7 @@ async function init() {
   await User.sync({ alter: true });
   await UserShopConf.sync({ alter: true });
   await UserRank.sync({ alter: true });
+  await Item.sync({ alter: true });
 }
 
 // 导出初始化方法和模型
@@ -182,5 +245,6 @@ module.exports = {
   Counter,
   User,
   UserShopConf,
-  UserRank
+  UserRank,
+  Item
 };

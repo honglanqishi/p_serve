@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-undef
-const { User, UserShopConf, UserRank } = require("../../db.js");
+const { User, UserShopConf, UserRank, Item } = require("../../db.js");
 
 // eslint-disable-next-line no-undef
 const { v4: uuidv4 } = require("uuid")
@@ -142,7 +142,62 @@ router.post('/updateUserRankConf', async (req, res) => {
     res.send(ret)
 })
 
-//
+//新增物品
+router.post('/addItem', async (req, res) => {
+    console.log('addItem', req.body)
+    let p = req.body.data
+    let isAdd = req.body.isAdd
+    //如果是叠加物品，先查询是否有同类型物品，有则叠加
+    if (p.isPileUp) {
+        let list = await getItemsByType(p.type, p.userID)
+        console.log(list, '查询同类型物品，打印List')
+        if (list.length > 0) {
+            let item = list[0]
+            
+            if (isAdd) {
+                item.quantity += p.quantity
+            } else {
+                item.quantity = p.quantity
+            }
+            let ret = await Item.update(item, {
+                where: {
+                    id: item.id,
+                    userID: item.userID
+                }
+            })
+            console.log(ret, '更新成功，打印addItem')
+            res.send(ret)
+            return
+        }
+    }
+
+    let ret = await Item.create(p)
+    console.log(ret, '新增成功，打印addItem')
+    res.send(ret)
+})
+
+//根据type和用户ID获取物品,返回数组,内部调用
+var getItemsByType = async (type, userID) => {
+    let ret = await Item.findAll({
+        where: {
+            type: type,
+            userID: userID
+        }
+    })
+    return ret
+}
+
+
+//批量新增物品
+router.post('/addItems', async (req, res) => {
+    console.log('addItems', req.body)
+    let ret = await Item.bulkCreate(req.body)
+    console.log(ret, '批量新增成功，打印addItems')
+    res.send(ret)
+})
+
+
+
 
 // eslint-disable-next-line no-undef
 module.exports = {
