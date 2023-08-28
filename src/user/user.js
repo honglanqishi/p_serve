@@ -196,11 +196,11 @@ router.post('/getItemsByUserID', async (req, res) => {
         }
     })
 
-    if (ret.length > 0) {
-        ret.forEach((item) => {
-            item.eq_attr = JSON.parse(item.eq_attr)
-        })
-    }
+    // if (ret.length > 0) {
+    //     ret.forEach((item) => {
+    //         item.eq_attr = JSON.parse(item.eq_attr)
+    //     })
+    // }
 
     console.log(ret, '查询成功，打印getItemsByUserID')
     res.send(ret)
