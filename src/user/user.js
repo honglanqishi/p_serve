@@ -200,7 +200,9 @@ router.post('/getItemsByUserID', async (req, res) => {
     if (ret.length > 0) {
         ret.forEach((item) => {
             let data = item.dataValues
-            item.dataValues.eq_attr = JSON.parse(data.eq_attr)
+            if(data.eq_attr) {
+                item.dataValues.eq_attr = JSON.parse(data.eq_attr)
+            }
         })
     }
 
