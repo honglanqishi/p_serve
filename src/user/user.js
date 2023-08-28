@@ -153,7 +153,7 @@ router.post('/addItem', async (req, res) => {
         console.log(list, '查询同类型物品，打印List')
         if (list.length > 0) {
             let item = list[0]
-            
+
             if (isAdd) {
                 item.quantity += p.quantity
             } else {
@@ -186,6 +186,41 @@ var getItemsByType = async (type, userID) => {
     })
     return ret
 }
+
+//根据用户ID获取物品,返回数组
+router.post('/getItemsByUserID', async (req, res) => {
+    console.log('getItemsByUserID', req.body)
+    let ret = await Item.findAll({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    if (ret.length > 0) {
+        ret.forEach((item) => {
+            item.eq_attr = JSON.parse(item.eq_attr)
+        })
+    }
+
+    console.log(ret, '查询成功，打印getItemsByUserID')
+    res.send(ret)
+})
+
+//根据用户ID和物品ID更新物品数据
+router.post('/updateItem', async (req, res) => {
+    console.log('updateItem', req.body)
+    let ret = await Item.update(req.body, {
+        where: {
+            id: req.body.data.id,
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '更新成功，打印updateItem')
+    res.send(ret)
+})
+
+
+
 
 
 //批量新增物品
