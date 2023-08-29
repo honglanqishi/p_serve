@@ -227,6 +227,19 @@ router.post('/deleteItemsByType', async (req, res) => {
     res.send(ret)
 })
 
+//根据ID删除用户物品
+router.post('/deleteItemsById', async (req, res) => {
+    console.log('deleteItemsById', req.body)
+    let ret = await Item.destroy({
+        where: {
+            id: req.body.id,
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '删除成功，打印deleteItemsById')
+    res.send(ret)
+})
+
 
 
 
