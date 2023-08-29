@@ -229,6 +229,76 @@ const Item = sequelize.define("Item", {
 );
 
 
+// 定义用户天赋数据模型
+const UserTalent = sequelize.define("UserTalent", {
+  userID: {
+    type: DataTypes.UUID
+  },
+  HP: {
+    type: DataTypes.INTEGER,
+  },
+  attack: {
+    type: DataTypes.INTEGER,
+  },
+  hurtLessen: {
+    type: DataTypes.INTEGER,
+  },
+  addHP: {
+    type: DataTypes.INTEGER,
+  },
+  curLevel:{
+    type: DataTypes.STRING
+  },
+  keyLevel: {
+    type: DataTypes.INTEGER
+  },
+  pickUpRange: {
+    type: DataTypes.FLOAT
+  },
+  recoverHP: {
+    type: DataTypes.FLOAT
+  },
+  moneyAdd: {
+    type: DataTypes.FLOAT
+  },
+  critical: {
+    type: DataTypes.FLOAT
+  },
+  experienceAdd: {
+    type: DataTypes.FLOAT
+  },
+  criticalHurt: {
+    type: DataTypes.FLOAT
+  },
+  levelUpRecoverHP: {
+    type: DataTypes.FLOAT
+  },
+  dropAdd: {
+    type: DataTypes.FLOAT
+  },
+  skillAttack: {
+    type: DataTypes.FLOAT
+  },
+  moveSpeed: {
+    type: DataTypes.FLOAT
+  },
+  attackSpeed: {
+    type: DataTypes.FLOAT
+  },
+  attackInterval: {
+    type: DataTypes.FLOAT
+  },
+  eqsBasicsAdd: {
+    type: DataTypes.FLOAT
+  },
+  bulletSpeed: {
+    type: DataTypes.FLOAT
+  },
+  bulletScale: {
+    type: DataTypes.FLOAT
+  }
+});
+
 
 
 
@@ -239,6 +309,7 @@ async function init() {
   await UserShopConf.sync({ alter: true });
   await UserRank.sync({ alter: true });
   await Item.sync({ alter: true });
+  await UserTalent.sync({ alter: true });
 }
 
 // 导出初始化方法和模型
@@ -249,5 +320,6 @@ module.exports = {
   User,
   UserShopConf,
   UserRank,
-  Item
+  Item,
+  UserTalent
 };

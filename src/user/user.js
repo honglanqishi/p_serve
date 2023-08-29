@@ -123,7 +123,7 @@ router.post('/updateUserRankConf', async (req, res) => {
     //更新前先查询，是否需要更新排行榜
     let userRank = await getUserRank(req)
     let needUpdate = false
-    let data3 =  {
+    let data3 = {
         nickname: req.body.nickname,
         avatar: req.body.avatar
     }
@@ -269,13 +269,6 @@ router.post('/deleteItemsById', async (req, res) => {
 })
 
 
-
-
-
-
-
-
-
 //批量新增物品
 router.post('/addItems', async (req, res) => {
     console.log('addItems', req.body)
@@ -283,6 +276,50 @@ router.post('/addItems', async (req, res) => {
     console.log(ret, '批量新增成功，打印addItems')
     res.send(ret)
 })
+
+
+
+//根据用户ID获取天赋数据
+router.post('/getTalentByUserID', async (req, res) => {
+    console.log('getTalentByUserID', req.body)
+    let ret = await Item.findOne({
+        where: {
+            userID: req.body.userID,
+        }
+    })
+    console.log(ret, '查询成功，打印getTalentByUserID')
+    res.send(ret)
+})
+
+//根据用户ID更新天赋数据
+router.post('/setTalentDataByUserID', async (req, res) => {
+    console.log('setTalentDataByUserID', req.body)
+    let ret  = null
+    let [item, created] = await Item.findOrCreate({
+        where: {
+            userID: req.body.userID,
+        },
+        defaults: req.body
+    })
+    if (!created) {
+        console.log('已存在，更新')
+        ret = await item.update(req.body, {
+            where: {
+                userID: req.body.userID
+            }
+        })
+    } else {    
+        console.log('不存在，新增')
+        ret = item
+    }
+
+
+
+    console.log(ret, '更新成功，打印setTalentDataByUserID')
+    res.send(ret)
+})
+
+
 
 
 
