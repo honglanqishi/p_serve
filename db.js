@@ -221,6 +221,9 @@ const Item = sequelize.define("Item", {
   quality: {
     type: DataTypes.INTEGER,
   },
+  bullet: {
+    type: DataTypes.STRING,
+  },
 
 }
 );

@@ -240,7 +240,7 @@ router.post('/deleteItemsById', async (req, res) => {
     if (ret >= 1) {
         res.send({
             code: 200,
-            msg: "删除成功"
+            msg: `删除成功,${ret}条`
         })
     } else if (ret == 0) {
         res.send({
