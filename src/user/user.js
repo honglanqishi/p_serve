@@ -189,13 +189,13 @@ var getItemsByType = async (type, userID) => {
 
 //根据用户ID获取物品,返回数组
 router.post('/getItemsByUserID', async (req, res) => {
-    console.log('getItemsByUserID', req.body)
+    // console.log('getItemsByUserID', req.body)
     let ret = await Item.findAll({
         where: {
             userID: req.body.userID
         }
     })
-    console.log(ret, '查询成功，打印getItemsByUserID')
+    // console.log(ret, '查询成功，打印getItemsByUserID')
     res.send(ret)
 })
 
@@ -237,7 +237,7 @@ router.post('/deleteItemsById', async (req, res) => {
         }
     })
     console.log(ret, '删除成功，打印deleteItemsById')
-    res.send(ret)
+    res.sendStatus(ret)
 })
 
 
