@@ -123,12 +123,29 @@ router.post('/updateUserRankConf', async (req, res) => {
     //更新前先查询，是否需要更新排行榜
     let userRank = await getUserRank(req)
     let needUpdate = false
-    if (req.body.survivalTime > userRank.survivalTime || req.body.killCount > userRank.killCount || req.body.damageCount > userRank.damageCount) {
-        needUpdate = true
+    let data3 =  {
+        nickname: req.body.nickname,
+        avatar: req.body.avatar
     }
+    if (req.body.survivalTime > userRank.survivalTime) {
+        needUpdate = true
+        data3.survivalTime = req.body.survivalTime
+    }
+
+    if (req.body.killCount > userRank.killCount) {
+        needUpdate = true
+        data3.killCount = req.body.killCount
+    }
+
+    if (req.body.damageCount > userRank.damageCount) {
+        needUpdate = true
+        data3.damageCount = req.body.damageCount
+    }
+
+
     let ret = null
     if (needUpdate) {
-        ret = await UserRank.update(req.body, {
+        ret = await UserRank.update(data3, {
             where: {
                 userID: req.body.userID
             }
