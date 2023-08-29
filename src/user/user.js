@@ -153,7 +153,7 @@ router.post('/addItem', async (req, res) => {
         console.log(list, '查询同类型物品，打印List')
         if (list.length > 0) {
             let item = list[0].dataValues
-            
+
             if (isAdd) {
                 item.quantity += p.quantity
             } else {
@@ -237,7 +237,18 @@ router.post('/deleteItemsById', async (req, res) => {
         }
     })
     console.log(ret, '删除成功，打印deleteItemsById')
-    res.sendStatus(ret)
+    if (ret == 1) {
+        res.send({
+            code: 200,
+            msg: "删除成功"
+        })
+    } else if (ret == 0) {
+        res.send({
+            code: 500,
+            msg: "删除状态异常"
+        })
+    }
+
 })
 
 
