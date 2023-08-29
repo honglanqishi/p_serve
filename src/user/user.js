@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-undef
-const { User, UserShopConf, UserRank, Item } = require("../../db.js");
+const { User, UserShopConf, UserRank, Item ,UserTalent} = require("../../db.js");
 
 // eslint-disable-next-line no-undef
 const { v4: uuidv4 } = require("uuid")
@@ -282,7 +282,7 @@ router.post('/addItems', async (req, res) => {
 //根据用户ID获取天赋数据
 router.post('/getTalentByUserID', async (req, res) => {
     console.log('getTalentByUserID', req.body)
-    let ret = await Item.findOne({
+    let ret = await UserTalent.findOne({
         where: {
             userID: req.body.userID,
         }
@@ -295,7 +295,7 @@ router.post('/getTalentByUserID', async (req, res) => {
 router.post('/setTalentDataByUserID', async (req, res) => {
     console.log('setTalentDataByUserID', req.body)
     let ret  = null
-    let [item, created] = await Item.findOrCreate({
+    let [item, created] = await UserTalent.findOrCreate({
         where: {
             userID: req.body.userID,
         },
