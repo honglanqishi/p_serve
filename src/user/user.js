@@ -237,7 +237,7 @@ router.post('/deleteItemsById', async (req, res) => {
         }
     })
     console.log(ret, '删除成功，打印deleteItemsById')
-    if (ret == 1) {
+    if (ret >= 1) {
         res.send({
             code: 200,
             msg: "删除成功"
