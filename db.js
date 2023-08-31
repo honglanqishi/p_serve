@@ -304,6 +304,18 @@ const UserTalent = sequelize.define("UserTalent", {
 });
 
 
+// 定义用户奖励领取数据模型
+const UserAward = sequelize.define("UserAward", {
+  userID: {
+    type: DataTypes.UUID
+  },
+  //邀请好友领取进度
+  inviteAwardProgress: {
+    type: DataTypes.JSON,
+  }
+});
+
+
 
 
 // 数据库初始化方法
@@ -314,6 +326,7 @@ async function init() {
   await UserRank.sync({ alter: true });
   await Item.sync({ alter: true });
   await UserTalent.sync({ alter: true });
+  await UserAward.sync({ alter: true });
 }
 
 // 导出初始化方法和模型
@@ -325,5 +338,6 @@ module.exports = {
   UserShopConf,
   UserRank,
   Item,
-  UserTalent
+  UserTalent,
+  UserAward
 };

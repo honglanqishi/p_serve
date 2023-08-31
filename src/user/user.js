@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-undef
-const { User, UserShopConf, UserRank, Item ,UserTalent} = require("../../db.js");
+const { User, UserShopConf, UserRank, Item ,UserTalent,UserAward} = require("../../db.js");
 
 // eslint-disable-next-line no-undef
 const { v4: uuidv4 } = require("uuid")
@@ -331,8 +331,50 @@ router.post('/updateInviteCount', async (req, res) => {
     })
     console.log(ret, '更新成功，打印updateInviteCount')
     res.send(ret)
-
 })
+
+//根据用户ID更新奖励进度
+router.post('/updateUserAward', async (req, res) => {
+    let ret  = null
+    let [item, created] = await UserAward.findOrCreate({
+        where: {
+            userID: req.body.userID,
+        },
+        defaults: req.body
+    })
+    if (!created) {
+        console.log('已存在，更新')
+        ret = await item.update(req.body, {
+            where: {
+                userID: req.body.userID
+            }
+        })
+    } else {    
+        console.log('不存在，新增')
+        ret = item
+    }
+    console.log(ret, '更新成功，打印setTalentDataByUserID')
+    res.send(ret)
+})
+
+//根据用户ID获取奖励进度
+router.post('/getUserAward', async (req, res) => {
+    console.log('getUserAward请求参数', req.body.userID)
+    let ret = await UserAward.findOne({
+        where: {
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '查询结果')
+    if (!ret) {
+        ret = "null"
+    }
+    res.send(ret)
+});
+
+
+
+
 
 
 //通过用户ID删除用户
