@@ -320,6 +320,21 @@ router.post('/setTalentDataByUserID', async (req, res) => {
 })
 
 
+//根据用户ID更新邀请好友次数
+router.post('/updateInviteCount', async (req, res) => {
+    console.log('updateInviteCount', req.body)
+    //只更新邀请次数，且自增1
+    let ret = await User.increment('inviteCount', {
+        where: {
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '更新成功，打印updateInviteCount')
+    res.send(ret)
+
+})
+
+
 
 
 

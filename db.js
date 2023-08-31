@@ -116,6 +116,10 @@ const User = sequelize.define("User", {
   },
   endlessChallengeCount: {
     type: DataTypes.INTEGER,
+  },
+  inviteCount: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   }
 
 });
