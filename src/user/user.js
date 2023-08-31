@@ -58,6 +58,21 @@ router.post('/getUserInfo', async (req, res) => {
     res.send(ret)
 });
 
+//根据用户ID获取用户信息
+router.post('/getUserInfoByUserID', async (req, res) => {
+    console.log('getUserInfoByUserID请求参数', req.body.userID)
+    let ret = await User.findOne({
+        where: {
+            userID: req.body.userID
+        }
+    })
+    console.log(ret, '查询结果')
+    if (!ret) {
+        ret = "null"
+    }
+    res.send(ret)
+})
+
 
 router.post('/createUser', async (req, res) => {
     console.log('createUser', req.body)
