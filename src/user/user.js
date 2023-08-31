@@ -340,11 +340,11 @@ router.post('/updateUserAward', async (req, res) => {
         where: {
             userID: req.body.userID,
         },
-        defaults: req.body
+        defaults: req.body.data
     })
     if (!created) {
         console.log('已存在，更新')
-        ret = await item.update(req.body, {
+        ret = await item.update(req.body.data, {
             where: {
                 userID: req.body.userID
             }
