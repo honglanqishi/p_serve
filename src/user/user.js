@@ -335,6 +335,58 @@ router.post('/updateInviteCount', async (req, res) => {
 })
 
 
+//通过用户ID删除用户
+router.post('/deleteUserByUserID', async (req, res) => {
+    console.log('deleteUserByUserID', req.body)
+    let ret = await User.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    //删除用户商店配置
+    await UserShopConf.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    //删除用户排行榜
+    await UserRank.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    //删除用户物品
+    await Item.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    //删除用户天赋
+    await UserTalent.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
+    console.log(ret, '删除成功，打印deleteUserByUserID')
+    if (ret >= 1) {
+        res.send({
+            code: 200,
+            msg: `删除成功,${ret}条`
+        })
+    } else if (ret == 0) {
+        res.send({
+            code: 500,
+            msg: "删除状态异常"
+        })
+    }
+
+})
+
 
 
 
