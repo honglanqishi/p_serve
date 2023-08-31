@@ -429,6 +429,13 @@ router.post('/deleteUserByUserID', async (req, res) => {
         }
     })
 
+    //删除用户奖励
+    await UserAward.destroy({
+        where: {
+            userID: req.body.userID
+        }
+    })
+
     console.log(ret, '删除成功，打印deleteUserByUserID')
     if (ret >= 1) {
         res.send({
